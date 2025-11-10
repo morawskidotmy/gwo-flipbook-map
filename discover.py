@@ -40,6 +40,8 @@ def update_progress(candidate: int) -> bool:
     return False
 
 def buffer_result(entry: dict):
+    if entry.get("skipped"):
+        return
     result_buf.append(entry)
     if len(result_buf) >= BUFFER_LIMIT:
         flush_results()
@@ -118,4 +120,7 @@ def main():
     except KeyboardInterrupt:
         print("\nInterrupted – flushing pending results...")
     finally:
-        flush
+        flush_results()
+
+if __name__ == "__main__":
+    main()
